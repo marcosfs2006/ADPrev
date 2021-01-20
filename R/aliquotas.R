@@ -15,4 +15,5 @@
 #'   \item{inic_vigencia}{data de início de vigência da alíquota}
 #'   \item{fim_vigencia}{data de término de vigência da alíquota}
 #' }
+#' @md
 "aliquotas"
