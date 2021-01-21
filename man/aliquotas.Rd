@@ -32,6 +32,9 @@ Os dados referem-se à atualização de DEZ/2020 disponibilizada em 20.01.2021.
 
 Data de extração: 20.01.2021
 
+O conjunto de dados original, publicado pela SPREV, possui um campo
+'Observação' que foi excluído.
+
 Exemplos de uso deste conjunto de dados podem ser vistos no
 tutorial \href{https://marcosfs2006.github.io/ADPrevBook/}{Análise de Dados Previdenciários - ADPrev}
 }

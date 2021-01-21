@@ -22,6 +22,13 @@
 #' 
 #' Data de extração: 20.01.2021
 #' 
+#' A base de dados original relaciona todos os entes, tanto os vinculados ao RGPS 
+#' quanto os vinculados ao RPPS. Esta base de dados contempla apenas os CRP dos
+#' entes vinculados ao RPPS.
+#' 
+#' Quando a data de validade do CRP coincide com a data de extração dos dados, a
+#' situação do CRP é `VENCIDO`.
+#' 
 #' Exemplos de uso deste conjunto de dados podem ser vistos no
 #' tutorial [Análise de Dados Previdenciários - ADPrev](https://marcosfs2006.github.io/ADPrevBook/) 
 #'   

@@ -20,6 +20,9 @@
 #' 
 #' Data de extração: 20.01.2021
 #' 
+#' O conjunto de dados original, publicado pela SPREV, possui um campo
+#' 'Observação' que foi excluído. 
+#' 
 #' Exemplos de uso deste conjunto de dados podem ser vistos no
 #' tutorial [Análise de Dados Previdenciários - ADPrev](https://marcosfs2006.github.io/ADPrevBook/)
 #' 
