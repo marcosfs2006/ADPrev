@@ -3,7 +3,7 @@
 \docType{data}
 \name{crp}
 \alias{crp}
-\title{Dados do Certificado de Regularidade Previdenciária - CRP}
+\title{Certificado de Regularidade Previdenciária - CRP}
 \format{
 Data frame contendo oito variáveis.
 \describe{
@@ -26,11 +26,15 @@ vinculado - \code{RGPS} ou \code{RPPS}}
 crp
 }
 \description{
-Este conjunto de dados contém informações sobre o CRP de todos os entes
-do Brasil, vinculados ao RGPS e ao RPPS.
+Este conjunto de dados contém informações sobre o Certificado de Regularidade
+previdenciária - CRP de todos os entes do Brasil, vinculados ao RGPS e ao RPPS.
 }
 \details{
 Os dados referem-se à atualização de DEZ/2020 disponibilizada em 20.01.2021.
+
 Data de extração: 20.01.2021
+
+Exemplos de uso deste conjunto de dados podem ser vistos no
+tutorial \href{https://marcosfs2006.github.io/ADPrevBook/}{Análise de Dados Previdenciários - ADPrev}
 }
 \keyword{datasets}

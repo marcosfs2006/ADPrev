@@ -3,7 +3,7 @@
 \docType{data}
 \name{cadastro}
 \alias{cadastro}
-\title{Regime previdenciário ao qual o ente está vinculado}
+\title{Regime Previdenciário do Ente}
 \format{
 Data frame contendo quatro variáveis
 \describe{
@@ -13,14 +13,22 @@ Data frame contendo quatro variáveis
 \item{regime}{regime previdenciário ao qual o ente está vinculado.\code{RGPS}, \code{RPPS} ou \verb{RPPS em Extinção}}
 }
 }
+\source{
+\url{https://www.gov.br/previdencia/pt-br/assuntos/previdencia-no-servico-publico/estatisticas-e-informacoes-dos-rpps-1/estatisticas-e-informacoes-dos-rpps}
+}
 \usage{
 cadastro
 }
 \description{
-Este conjunto de dados indica o regime previdenciário de cada ente do Brasil.
+Este conjunto de dados consiste na relação dos entes com a indicação do
+regime previdenciário (\code{RGPS} ou \code{RPPS}) ao qual está vinculado.
 }
 \details{
 Os dados referem-se à atualização de DEZ/2020 disponibilizada em 20.01.2021.
+
 Data de extração: 20.01.2021
+
+Exemplos de uso deste conjunto de dados podem ser vistos no
+tutorial \href{https://marcosfs2006.github.io/ADPrevBook/}{Análise de Dados Previdenciários - ADPrev}
 }
 \keyword{datasets}

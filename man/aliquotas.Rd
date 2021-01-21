@@ -3,7 +3,7 @@
 \docType{data}
 \name{aliquotas}
 \alias{aliquotas}
-\title{Dados das alíquotas de contribuição dos RPPS}
+\title{Alíquotas de Contribuição}
 \format{
 Data frame com nove variáveis.
 \describe{
@@ -17,6 +17,9 @@ Data frame com nove variáveis.
 \item{fim_vigencia}{data de término de vigência da alíquota}
 }
 }
+\source{
+\url{https://www.gov.br/previdencia/pt-br/assuntos/previdencia-no-servico-publico/estatisticas-e-informacoes-dos-rpps-1/estatisticas-e-informacoes-dos-rpps}
+}
 \usage{
 aliquotas
 }
@@ -26,6 +29,10 @@ praticadas nos RPPS.
 }
 \details{
 Os dados referem-se à atualização de DEZ/2020 disponibilizada em 20.01.2021.
+
 Data de extração: 20.01.2021
+
+Exemplos de uso deste conjunto de dados podem ser vistos no
+tutorial \href{https://marcosfs2006.github.io/ADPrevBook/}{Análise de Dados Previdenciários - ADPrev}
 }
 \keyword{datasets}
