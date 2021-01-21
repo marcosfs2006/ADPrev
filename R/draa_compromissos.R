@@ -1,9 +1,10 @@
-#' Dados dos compromissos do RPPS constantes do DRAA
+#' Dados dos Compromissos do RPPS Constantes do DRAA
 #' 
 #' Este conjunto de dados contém informações sobre os compromissos dos RPPS
 #' informados no Demonstrativo do Resultado da Avaliação Atuarial - DRAA.
-#' O conjunto de dados contém dados dos anos 2019 e 2020 (os dados originais 
-#' possuem informação desde 2015)
+#' 
+#' O conjunto de dados contém informações dos anos 2019 e 2020, embora o
+#' conjunto de dados original disponibilizado pela SPREV contenha informações desde 2015.
 #' 
 #' @name draa_compromissos
 #' @format Data frame com 13 variáveis
@@ -22,4 +23,14 @@
 #'   \item{vlr_geracao_atual}{valor da variável considerando a geração atual}
 #'   \item{vlr_geracao_futura}{valor da variável considerando a geração futura}
 #' }
+#' @details 
+#' Os dados referem-se à atualização de SET-DEZ/2020 disponibilizada em 15.01.2021.
+#' 
+#' Data de extração: 15.01.2021
+#' 
+#' Exemplos de uso deste conjunto de dados podem ser vistos no
+#' tutorial [Análise de Dados Previdenciários - ADPrev](https://marcosfs2006.github.io/ADPrevBook/) 
+#'   
+#' @source \url{https://www.gov.br/previdencia/pt-br/assuntos/previdencia-no-servico-publico/estatisticas-e-informacoes-dos-rpps-1/estatisticas-e-informacoes-dos-rpps}
+#' @md
 "draa_compromissos"

@@ -1,7 +1,7 @@
-#' Dados do Certificado de Regularidade Previdenciária - CRP
+#' Certificado de Regularidade Previdenciária - CRP
 #'
-#' Este conjunto de dados contém informações sobre o CRP de todos os entes
-#' do Brasil, vinculados ao RGPS e ao RPPS.
+#' Este conjunto de dados contém informações sobre o Certificado de Regularidade
+#' previdenciária - CRP de todos os entes do Brasil, vinculados ao RGPS e ao RPPS.
 #'
 #' @name crp
 #' @format Data frame contendo oito variáveis.
@@ -17,5 +17,14 @@
 #'   vinculado - `RGPS` ou `RPPS`}
 #'   \item{situacao}{situação do CRP - `VÁLIDO` ou `VENCIDO`}
 #' }
+#' @details 
+#' Os dados referem-se à atualização de DEZ/2020 disponibilizada em 20.01.2021.
+#' 
+#' Data de extração: 20.01.2021
+#' 
+#' Exemplos de uso deste conjunto de dados podem ser vistos no
+#' tutorial [Análise de Dados Previdenciários - ADPrev](https://marcosfs2006.github.io/ADPrevBook/) 
+#'   
 #' @source \url{https://www.gov.br/previdencia/pt-br/assuntos/previdencia-no-servico-publico/estatisticas-e-informacoes-dos-rpps-1/estatisticas-e-informacoes-dos-rpps}
+#' @md
 "crp"

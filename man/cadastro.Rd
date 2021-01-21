@@ -7,10 +7,10 @@
 \format{
 Data frame contendo quatro variáveis
 \describe{
-  \item{cnpj}{número do CNPJ do ente}
-  \item{uf}{sigla da unidade da federação}
-  \item{ente}{nome do ente}
-  \item{regime}{regime previdenciário ao qual o ente está vinculado.`RGPS`, `RPPS` ou `RPPS em Extinção`}
+\item{cnpj}{número do CNPJ do ente}
+\item{uf}{sigla da unidade da federação}
+\item{ente}{nome do ente}
+\item{regime}{regime previdenciário ao qual o ente está vinculado.\code{RGPS}, \code{RPPS} ou \verb{RPPS em Extinção}}
 }
 }
 \usage{
@@ -18,5 +18,9 @@ cadastro
 }
 \description{
 Este conjunto de dados indica o regime previdenciário de cada ente do Brasil.
+}
+\details{
+Os dados referem-se à atualização de DEZ/2020 disponibilizada em 20.01.2021.
+Data de extração: 20.01.2021
 }
 \keyword{datasets}

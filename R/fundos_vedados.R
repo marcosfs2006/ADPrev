@@ -19,4 +19,17 @@
 #'   \item{tx_saida}{percentual cobrado do investidor sobre o valor resgatado caso o resgate ocorra antes do prazo acordado}
 #'   \item{motivo}{motivo do fundo de investimento ser vedado ao RPPS}
 #' }
+#' @details 
+#' Os dados referem-se à listagem de fundos de investimentos vedados aos RPPS
+#' disponibilizada pela SPREV com data de 21.12.2018. Refere-se aos fundos de
+#' investimento que na data em referência possuiam aplicações dos RPPS.
+#' 
+#' É possível a existência de outros fundos de investimentos vedados que não 
+#' constem do conjunto de dados.
+#' 
+#' Exemplos de uso deste conjunto de dados podem ser vistos no
+#' tutorial [Análise de Dados Previdenciários - ADPrev](https://marcosfs2006.github.io/ADPrevBook/) 
+#'   
+#' @source \url{https://www.gov.br/previdencia/pt-br/assuntos/previdencia-no-servico-publico/menu-investimentos/investimento-estatisticas-e-informacoes}
+#' @md
 "fundos_vedados"

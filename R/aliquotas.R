@@ -1,4 +1,4 @@
-#' Dados das alíquotas de contribuição dos RPPS
+#' Alíquotas de Contribuição
 #'
 #' Este conjunto de dados contém informações sobre as alíquotas de contribuição
 #' praticadas nos RPPS.
@@ -15,5 +15,14 @@
 #'   \item{inic_vigencia}{data de início de vigência da alíquota}
 #'   \item{fim_vigencia}{data de término de vigência da alíquota}
 #' }
+#' @details 
+#' Os dados referem-se à atualização de DEZ/2020 disponibilizada em 20.01.2021.
+#' 
+#' Data de extração: 20.01.2021
+#' 
+#' Exemplos de uso deste conjunto de dados podem ser vistos no
+#' tutorial [Análise de Dados Previdenciários - ADPrev](https://marcosfs2006.github.io/ADPrevBook/)
+#' 
+#' @source \url{https://www.gov.br/previdencia/pt-br/assuntos/previdencia-no-servico-publico/estatisticas-e-informacoes-dos-rpps-1/estatisticas-e-informacoes-dos-rpps}   
 #' @md
 "aliquotas"

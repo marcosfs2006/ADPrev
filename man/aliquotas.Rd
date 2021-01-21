@@ -24,4 +24,8 @@ aliquotas
 Este conjunto de dados contém informações sobre as alíquotas de contribuição
 praticadas nos RPPS.
 }
+\details{
+Os dados referem-se à atualização de DEZ/2020 disponibilizada em 20.01.2021.
+Data de extração: 20.01.2021
+}
 \keyword{datasets}

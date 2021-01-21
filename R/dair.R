@@ -1,4 +1,4 @@
-#' Dados da carteira de investimentos do RPPS informada no DAIR
+#' Carteira de Investimentos e Demais Ativos do RPPS
 #' 
 #' Este conjunto de dados contém informações sobre os ativos garantidores do RPPS
 #' informados no Demonstrativo das Aplicações e Investimento dos Rercursos - DAIR
@@ -22,4 +22,15 @@
 #'   \item{pl_fundo}{patrimônio líquido do fundo de investimento}
 #'   \item{perc_pl_fundo}{percentual do patrimônio líquido do fundo de investimentos que o investimento do RPPS representa}
 #'}
+#' @details 
+#' Os dados referem-se à atualização de SET-DEZ/2020 disponibilizada em 14.01.2021.
+#' 
+#' Data de extração: 13.01.2021
+#' 
+#' Exemplos de uso deste conjunto de dados podem ser vistos no
+#' tutorial [Análise de Dados Previdenciários - ADPrev](https://marcosfs2006.github.io/ADPrevBook/) 
+#'   
+#' @source \url{https://www.gov.br/previdencia/pt-br/assuntos/previdencia-no-servico-publico/estatisticas-e-informacoes-dos-rpps-1/estatisticas-e-informacoes-dos-rpps}
+#' @md
+
 "dair" 
