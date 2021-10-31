@@ -35,7 +35,8 @@ Este conjunto de dados contém informações sobre os ativos garantidores do RPP
 informados no Demonstrativo das Aplicações e Investimento dos Rercursos - DAIR
 }
 \details{
-Os dados referem-se à atualização de SET-DEZ/2020 disponibilizada em 14.01.2021.
+Os dados referem-se à atualização de SET-DEZ/2020 disponibilizada em 14.01.2021 mas
+contém apenas as posições da carteira de Jan. de 2018 a Dez.2020.
 
 Data de extração: 13.01.2021
 
