@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_dipr.R
 \name{get_dipr}
 \alias{get_dipr}
-\title{Obtenção de dados do DIPR na API do CADPREV}
+\title{Extrai dados do DIPR na API do CADPREV}
 \usage{
 get_dipr(...)
 }
@@ -41,10 +41,10 @@ o CNPJ do Ente para consultas relativas a um RPPS específico.
 }
 \examples{
 \dontrun{ 
-# ObtÃ©m dados dos DIPR dos RPPS do RJ no mÃªs de janeiro de 2020
+# Obtém dados dos DIPR dos RPPS do RJ no mês de janeiro de 2020
 dipr_RJ <- get_dipr(sg_uf="RJ", dt_mes=1, dt_ano=2020) 
 
-# ObtÃ©m dados dos DIPR do RPPS de Quatis - RJ em todos os meses de 2021
+# Obtém dados dos DIPR do RPPS de Quatis - RJ em todos os meses de 2021
 dipr_QuatisRJ2021 <- get_dipr(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
 }
 

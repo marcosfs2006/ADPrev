@@ -1,4 +1,4 @@
-#' Obtenção de dados das APR na API do CADPREV
+#' Extrai dados das APR da API do CADPREV
 #'
 #' Função para a obtenção de dados relativos às Autorizações para Aplicações e
 #' Resgates - APR a partir da API do CADPREV cuja documentação pode ser
@@ -36,27 +36,22 @@
 #' apr_RJ2020JUL <- get_dair_aplicacoes_resgate(sg_uf="RJ", dt_ano=2021, dt_mes=7)
 #' 
 #' # Obtem os dados das APR emitidas pelo RPPS de Quatis - RJ em 2021
-#' crp_QuatisRJ <- get_crp(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
+#' apr_QuatisRJ2021 <- get_dair_aplicacoes_resgate(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
 #' }
 get_dair_aplicacoes_resgate <- function(...){ 
   
-  require(dplyr)
-  require(httr)
-  require(jsonlite)
-  require(tidyr)
-
   flag <- TRUE
   pagina = 0
   consulta <- list(...)
   dados_dair_aplicacoes_resgate <- data.frame()
 
   while(flag){
-    dair_aplicacoes_resgate <- GET("https://apicadprev.economia.gov.br/DAIR_APLICACOES_RESGATE?", query=append(consulta, list(offset = pagina))) 
-    stop_for_status(dair_aplicacoes_resgate, task="Error to connect to the server! Try again later.")
-    dair_aplicacoes_resgate_txt   <- content(dair_aplicacoes_resgate, as="text", encoding="UTF-8")
-    dair_aplicacoes_resgate_json  <- fromJSON(dair_aplicacoes_resgate_txt, flatten = FALSE)
+    dair_aplicacoes_resgate <- httr::GET("https://apicadprev.economia.gov.br/DAIR_APLICACOES_RESGATE?", query=append(consulta, list(offset = pagina))) 
+    httr::stop_for_status(dair_aplicacoes_resgate, task="Error to connect to the server! Try again later.")
+    dair_aplicacoes_resgate_txt   <- httr::content(dair_aplicacoes_resgate, as="text", encoding="UTF-8")
+    dair_aplicacoes_resgate_json  <- jsonlite::fromJSON(dair_aplicacoes_resgate_txt, flatten = FALSE)
     dair_aplicacoes_resgate_df    <- as.data.frame(dair_aplicacoes_resgate_json[["results"]][["data"]])
-    dados_dair_aplicacoes_resgate <- bind_rows(dados_dair_aplicacoes_resgate, dair_aplicacoes_resgate_df)
+    dados_dair_aplicacoes_resgate <- dplyr::bind_rows(dados_dair_aplicacoes_resgate, dair_aplicacoes_resgate_df)
     flag <- dair_aplicacoes_resgate_json[["results"]][["rowLimitExceeded"]]
     pagina <- pagina + 1
     Sys.sleep(1)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_dair_aplicacoes_resgate.R
 \name{get_dair_aplicacoes_resgate}
 \alias{get_dair_aplicacoes_resgate}
-\title{Obtenção de dados das APR na API do CADPREV}
+\title{Extrai dados das APR da API do CADPREV}
 \usage{
 get_dair_aplicacoes_resgate(...)
 }
@@ -41,13 +41,13 @@ o CNPJ do Ente para consultas relativas a um RPPS específico.
 }
 \examples{
 \dontrun{ 
-# ObtÃ©m os dados das APR emitidas pelos RPPS do RJ para o ano de 2021
+# Obtém os dados das APR emitidas pelos RPPS do RJ para o ano de 2021
 apr_RJ2021 <- get_dair_aplicacoes_resgate(sg_uf="RJ", dt_ano=2021) 
 
-# ObtÃ©m os dados das APR emitidas pelos RPPS do RJ em julho de 2020
+# Obtém os dados das APR emitidas pelos RPPS do RJ em julho de 2020
 apr_RJ2020JUL <- get_dair_aplicacoes_resgate(sg_uf="RJ", dt_ano=2021, dt_mes=7)
 
 # Obtem os dados das APR emitidas pelo RPPS de Quatis - RJ em 2021
-crp_QuatisRJ <- get_crp(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
+apr_QuatisRJ2021 <- get_dair_aplicacoes_resgate(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
 }
 }

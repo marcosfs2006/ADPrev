@@ -1,4 +1,4 @@
-#' Obtenção de dados do DRAA na API do CADPREV
+#' Extrai dados do DRAA da API do CADPREV
 #'
 #' Função para a obtenção de dados relativos aos valores dos compromissos 
 #' obtidos na avaliação atuarial anual do RPPS e registrados no  
@@ -36,34 +36,27 @@
 #' @examples
 #' \dontrun{ 
 #' # Obtém dados dos valores dos compromissos dos DRAA  dos RPPS do RJ para todos
-#' os anos disponíveis na base de dados (2015 em diante)
-#' 
+#' # os anos disponíveis na base de dados (2015 em diante)
 #' draa_RJ <- get_draa_valores_compromissos(sg_uf="RJ") 
 #' 
 #' # Obtém dados dos valores dos compromissos do DRAA do RPPS de Quatis - RJ do ano de 2019
-#' 
 #' draa_QuatisRJ2019 <- get_draa_valores_compromissos(nr_cnpj_entidade = "39560008000148", dt_exercicio=2019)
 #' }
 #'
 get_draa_valores_compromissos <- function(...){
 
-  require(dplyr)
-  require(httr)
-  require(jsonlite)
-  require(tidyr)
-  
   flag <- TRUE
   pagina = 0
   consulta <- list(...)
   dados_draa_valores_compromissos <- data.frame()
   
   while(flag){
-    draa_valores_compromissos <- GET("https://apicadprev.economia.gov.br/DRAA_VALORES_COMPROMISSOS?", query=append(consulta, list(offset = pagina)))
-    stop_for_status(draa_valores_compromissos, task="connect to the server! Try again later.")
-    draa_valores_compromissos_txt  <- content(draa_valores_compromissos, as="text", encoding="UTF-8")
-    draa_valores_compromissos_json <- fromJSON(draa_valores_compromissos_txt, flatten = FALSE) 
+    draa_valores_compromissos <- httr::GET("https://apicadprev.economia.gov.br/DRAA_VALORES_COMPROMISSOS?", query=append(consulta, list(offset = pagina)))
+    httr::stop_for_status(draa_valores_compromissos, task="connect to the server! Try again later.")
+    draa_valores_compromissos_txt  <- httr::content(draa_valores_compromissos, as="text", encoding="UTF-8")
+    draa_valores_compromissos_json <- jsonlite::fromJSON(draa_valores_compromissos_txt, flatten = FALSE) 
     draa_valores_compromissos_df   <- as.data.frame(draa_valores_compromissos_json[["results"]][["data"]])
-    dados_draa_valores_compromissos <- bind_rows(dados_draa_valores_compromissos, draa_valores_compromissos_df)
+    dados_draa_valores_compromissos <- dplyr::bind_rows(dados_draa_valores_compromissos, draa_valores_compromissos_df)
     flag <- draa_valores_compromissos_json[["results"]][["rowLimitExceeded"]]
     pagina <- pagina + 1
     Sys.sleep(1)

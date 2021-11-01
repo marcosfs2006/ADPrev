@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_aliquota.R
 \name{get_aliquota}
 \alias{get_aliquota}
-\title{Obtenção de dados de alíquotas na API do CADPREV}
+\title{Extrai dados de alíquotas da API do CADPREV}
 \usage{
 get_aliquota(...)
 }
@@ -39,10 +39,10 @@ o CNPJ do Ente para consultas relativas a um RPPS específico.
 }
 \examples{
 \dontrun{ 
-# ObtÃ©m dados das alÃ­quotas praticadas pelos RPPS do RJ
+# Obtém dados das alíquotas praticadas pelos RPPS do RJ
 aliquotas_RJ <- get_aliquota(sg_uf="RJ") 
 
-# ObtÃ©m dados das alÃ­quotas praticadas pelo RPPS de Quatis - RJ
+# Obtém dados das alíquotas praticadas pelo RPPS de Quatis - RJ
 aliquotas_QuatisRJ <- get_aliquota(nr_cnpj_entidade = "39560008000148")
 }
 

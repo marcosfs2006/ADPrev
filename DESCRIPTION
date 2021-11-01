@@ -8,4 +8,8 @@ Description: Este pacote disponibiliza dados e funções para auxiliar na análi
 License: MIT
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
+Imports: 
+    dplyr,
+    httr,
+    jsonlite

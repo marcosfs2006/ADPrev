@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_regime_previdenciario.R
 \name{get_regime_previdenciario}
 \alias{get_regime_previdenciario}
-\title{Regime Previdenciário dos RPPS}
+\title{Extrai dados do regime previdenciário da API do CADPREV}
 \usage{
 get_regime_previdenciario(...)
 }
@@ -39,11 +39,12 @@ o CNPJ do Ente para consultas relativas a um RPPS específico.
 }
 \examples{
 \dontrun{ 
-# ObtÃ©m dados das alÃ­quotas praticadas pelos RPPS do RJ
-aliquotas_RJ <- get_aliquota(sg_uf="RJ") 
+# Obtém dados do regime previdenciário a que os Entes do RJ estão vinvulados
+reg_prev_RJ <- get_regime_previdenciario(sg_uf="RJ") 
 
-# ObtÃ©m dados das alÃ­quotas praticadas pelo RPPS de Quatis - RJ
-aliquotas_QuatisRJ <- get_aliquota(nr_cnpj_entidade = "39560008000148")
+# Obtém dados do regime previdenciário ao qual o município de Quatis - RJ
+# está vinculado
+reg_prev_QuatisRJ <- get_regime_previdenciario(nr_cnpj_entidade = "39560008000148")
 }
 
 }

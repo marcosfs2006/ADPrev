@@ -1,4 +1,4 @@
-#' Obtenção de dados de alíquotas na API do CADPREV
+#' Extrai dados de alíquotas da API do CADPREV
 #'
 #' Função para a obtenção de dados relativos às alíquotas praticadas pelos RPPS,
 #' utilizando a API do CADPREV cuja documentação pode ser consultada em 
@@ -36,23 +36,18 @@
 #'
 get_aliquota <- function(...){
 
-  # require(dplyr)
-  # require(httr)
-  # require(jsonlite) 
-  # require(tidyr)
-
   flag <- TRUE
   pagina = 0
   consulta <- list(...)
   dados_aliquota <- data.frame()
   
   while(flag){
-    aliquota <- GET("https://apicadprev.economia.gov.br/RPPS_ALIQUOTA?", query=append(consulta, list(offset = pagina)))
-    stop_for_status(aliquota, task="Cannot connect to the server! Try again later.")
-    aliquota_txt  <- content(aliquota, as="text", encoding="UTF-8")
-    aliquota_json <- fromJSON(aliquota_txt, flatten = FALSE) 
+    aliquota <- httr::GET("https://apicadprev.economia.gov.br/RPPS_ALIQUOTA?", query=append(consulta, list(offset = pagina)))
+    httr::stop_for_status(aliquota, task="Cannot connect to the server! Try again later.")
+    aliquota_txt  <- httr::content(aliquota, as="text", encoding="UTF-8")
+    aliquota_json <- jsonlite::fromJSON(aliquota_txt, flatten = FALSE) 
     aliquota_df   <- as.data.frame(aliquota_json[["results"]][["data"]])
-    dados_aliquota <- bind_rows(dados_aliquota, aliquota_df)
+    dados_aliquota <- dplyr::bind_rows(dados_aliquota, aliquota_df)
     flag <- aliquota_json[["results"]][["rowLimitExceeded"]]
     pagina <- pagina + 1
     Sys.sleep(1)

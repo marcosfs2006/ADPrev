@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_draa_encaminhamento.R
 \name{get_draa_encaminhamento}
 \alias{get_draa_encaminhamento}
-\title{Obtenção de dados relativos ao encaminhamento do DRAA à SPREV na API do CADPREV}
+\title{Extrai dados de encaminhamento do DRAA da API do CADPREV}
 \usage{
 get_draa_encaminhamento(...)
 }
@@ -46,10 +46,10 @@ Se a avaliação atuarial tem data base em 31/12/2019 o ano do DRAA é 2020.
 }
 \examples{
 \dontrun{ 
-# ObtÃ©m dados de encaminhamento do DRAA feito pelos RPPS do RJ
+# Obtém dados de encaminhamento do DRAA feito pelos RPPS do RJ
 draa_encaminhamnto_RJ <- get_draa_encaminhamento(sg_uf="RJ") 
 
-# ObtÃ©m dados de encaminhamento do DRAA feito pelo RPPS de Quatis - RJ
+# Obtém dados de encaminhamento do DRAA feito pelo RPPS de Quatis - RJ
 draa_encaminhamento_QuatisRJ <- get_draa_encaminhamento(nr_cnpj_entidade = "39560008000148")
 }
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_draa_valores_compromissos.R
 \name{get_draa_valores_compromissos}
 \alias{get_draa_valores_compromissos}
-\title{Obtenção de dados do DRAA na API do CADPREV}
+\title{Extrai dados do DRAA da API do CADPREV}
 \usage{
 get_draa_valores_compromissos(...)
 }
@@ -47,13 +47,11 @@ Se a avaliação atuarial tem data base em 31/12/2019 o ano do DRAA é 2020.
 }
 \examples{
 \dontrun{ 
-# ObtÃ©m dados dos valores dos compromissos dos DRAA  dos RPPS do RJ para todos
-os anos disponÃ­veis na base de dados (2015 em diante)
-
+# Obtém dados dos valores dos compromissos dos DRAA  dos RPPS do RJ para todos
+# os anos disponíveis na base de dados (2015 em diante)
 draa_RJ <- get_draa_valores_compromissos(sg_uf="RJ") 
 
-# ObtÃ©m dados dos valores dos compromissos do DRAA do RPPS de Quatis - RJ do ano de 2019
-
+# Obtém dados dos valores dos compromissos do DRAA do RPPS de Quatis - RJ do ano de 2019
 draa_QuatisRJ2019 <- get_draa_valores_compromissos(nr_cnpj_entidade = "39560008000148", dt_exercicio=2019)
 }
 

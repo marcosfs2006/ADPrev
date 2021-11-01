@@ -1,4 +1,4 @@
-#' Obtenção de dados relativos ao encaminhamento do DRAA à SPREV na API do CADPREV
+#' Extrai dados de encaminhamento do DRAA da API do CADPREV
 #'
 #' Função para a obtenção de dados relativos ao encaminhamento do 
 #' Demonstrativo de Resultados da Avaliação Atuarial - DRAA à SPREV,
@@ -43,23 +43,18 @@
 #'
 get_draa_encaminhamento <- function(...){
 
-  require(dplyr)
-  require(httr)
-  require(jsonlite)
-  require(tidyr)
-  
   flag <- TRUE
   pagina = 0
   consulta <- list(...)
   dados_draa_encaminhamento <- data.frame()
   
   while(flag){
-    draa_encaminhamento <- GET("https://apicadprev.economia.gov.br/DRAA_ENCAMINHAMENTO?", query=append(consulta, list(offset = pagina)))
-    stop_for_status(draa_encaminhamento, task="connect to the server! Try again later.")
-    draa_encaminhamento_txt  <- content(draa_encaminhamento, as="text", encoding="UTF-8")
-    draa_encaminhamento_json <- fromJSON(draa_encaminhamento_txt, flatten = FALSE) 
+    draa_encaminhamento <- httr::GET("https://apicadprev.economia.gov.br/DRAA_ENCAMINHAMENTO?", query=append(consulta, list(offset = pagina)))
+    httr::stop_for_status(draa_encaminhamento, task="connect to the server! Try again later.")
+    draa_encaminhamento_txt  <- httr::content(draa_encaminhamento, as="text", encoding="UTF-8")
+    draa_encaminhamento_json <- jsonlite::fromJSON(draa_encaminhamento_txt, flatten = FALSE) 
     draa_encaminhamento_df   <- as.data.frame(draa_encaminhamento_json[["results"]][["data"]])
-    dados_draa_encaminhamento <- bind_rows(dados_draa_encaminhamento, draa_encaminhamento_df)
+    dados_draa_encaminhamento <- dplyr::bind_rows(dados_draa_encaminhamento, draa_encaminhamento_df)
     flag <- draa_encaminhamento_json[["results"]][["rowLimitExceeded"]]
     pagina <- pagina + 1
     Sys.sleep(1)

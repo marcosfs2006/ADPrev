@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_crp.R
 \name{get_crp}
 \alias{get_crp}
-\title{Obtenção de dados do CRP na API do CADPREV}
+\title{Extrai dados do CRP da API do CADPREV}
 \usage{
 get_crp(...)
 }
@@ -39,10 +39,10 @@ o CNPJ do Ente para consultas relativas a um RPPS específico.
 }
 \examples{
 \dontrun{ 
-# ObtÃ©m os dados do CRP dos RPPS do RJ
+# Obtém os dados do CRP dos RPPS do RJ
 crp_RJ <- get_crp(sg_uf="RJ") 
 
-# ObtÃ©m os dados do CRP do RPPS de Quatis - RJ
+# Obtém os dados do CRP do RPPS de Quatis - RJ
 crp_QuatisRJ <- get_crp(nr_cnpj_entidade = "39560008000148")
 }
 }

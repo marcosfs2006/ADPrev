@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_dair_carteira.R
 \name{get_dair_carteira}
 \alias{get_dair_carteira}
-\title{Obtenção de dados das carteiras de investimento dos RPPS na API do CADPREV}
+\title{Extrai dados da carteira de investimentos da API do CADPREV}
 \usage{
 get_dair_carteira(...)
 }
@@ -48,18 +48,16 @@ a ser disponibilizada mensalmente, isto é, ao término de cada mês.
 }
 \examples{
 \dontrun{ 
-# ObtÃ©m os dados da carteira de investimento dos RPPS do RJ para
+# Obtém os dados da carteira de investimento dos RPPS do RJ para
 # todos os mesess do ano de 2021
 
 dair_RJ2021 <- get_dair_carteira(sg_uf="RJ", dt_ano=2021) 
 
-# ObtÃ©m os dados da carteira de investimento dos RPPS do RJ no mÃªs de julho de 2020
-
+# Obtém os dados da carteira de investimento dos RPPS do RJ no mês de julho de 2020
 dair_RJ2020JUL <- get_dair_carteira(sg_uf="RJ", dt_ano=2021, dt_mes_bimestre=7)
 
 # Obtem os dados da carteira de investimento do RPPS de Quatis - RJ em
 # todos os meses de 2021
-
 dair_QuatisRJ <- get_crp(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
 }
 }

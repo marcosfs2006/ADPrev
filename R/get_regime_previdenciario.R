@@ -1,4 +1,4 @@
-#' Regime Previdenciário dos RPPS
+#' Extrai dados do regime previdenciário da API do CADPREV
 #'
 #' Função para a obtenção de dados relativos ao regime previdenciário a que
 #' pertence o RPPS utilizando a API do CADPREV cuja documentação pode ser consultada em 
@@ -27,32 +27,29 @@
 #' @return Um \code{data frame} contendo os dados requisitados.
 #' @examples
 #' \dontrun{ 
-#' # Obtém dados das alíquotas praticadas pelos RPPS do RJ
-#' aliquotas_RJ <- get_aliquota(sg_uf="RJ") 
+#' # Obtém dados do regime previdenciário a que os Entes do RJ estão vinvulados
+#' reg_prev_RJ <- get_regime_previdenciario(sg_uf="RJ") 
 #' 
-#' # Obtém dados das alíquotas praticadas pelo RPPS de Quatis - RJ
-#' aliquotas_QuatisRJ <- get_aliquota(nr_cnpj_entidade = "39560008000148")
+#' # Obtém dados do regime previdenciário ao qual o município de Quatis - RJ
+#' # está vinculado
+#' reg_prev_QuatisRJ <- get_regime_previdenciario(nr_cnpj_entidade = "39560008000148")
 #' }
 #'
 get_regime_previdenciario <- function(...){
 
-  require(dplyr)
-  require(httr)
-  require(jsonlite)
-  require(tidyr)
-  
+
   flag <- TRUE
   pagina=0
   consulta <- list(...)
   dados_regime_previdenciario <- data.frame()
   
   while(flag){
-    regime_previdenciario <- GET("https://apicadprev.economia.gov.br/RPPS_REGIME_PREVIDENCIARIO?", query=append(consulta, list(offset = pagina)))
-    stop_for_status(regime_previdenciario, task="Error to connect to the server! Try again later.")
-    regime_previdenciario_txt   <- content(regime_previdenciario, as="text", encoding="UTF-8")
-    regime_previdenciario_json  <- fromJSON(regime_previdenciario_txt, flatten = FALSE)
+    regime_previdenciario <- httr::GET("https://apicadprev.economia.gov.br/RPPS_REGIME_PREVIDENCIARIO?", query=append(consulta, list(offset = pagina)))
+    httr::stop_for_status(regime_previdenciario, task="Error to connect to the server! Try again later.")
+    regime_previdenciario_txt   <- httr::content(regime_previdenciario, as="text", encoding="UTF-8")
+    regime_previdenciario_json  <- jsonlite::fromJSON(regime_previdenciario_txt, flatten = FALSE)
     regime_previdenciario_df    <- as.data.frame(regime_previdenciario_json[["results"]][["data"]])
-    dados_regime_previdenciario <- bind_rows(dados_regime_previdenciario, regime_previdenciario_df)
+    dados_regime_previdenciario <- dplyr::bind_rows(dados_regime_previdenciario, regime_previdenciario_df)
     flag <- regime_previdenciario_json[["results"]][["rowLimitExceeded"]]
     pagina <- pagina + 1
     Sys.sleep(1)
