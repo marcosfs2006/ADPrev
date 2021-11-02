@@ -24,7 +24,7 @@
 #'}
 #' @details 
 #' Os dados referem-se à atualização de SET-DEZ/2020 disponibilizada em 14.01.2021 mas
-#' contém apenas as posições da carteira de Jan. de 2018 a Dez.2020.
+#' contém apenas dados de 2020.
 #' 
 #' Data de extração: 13.01.2021
 #' 
@@ -33,5 +33,4 @@
 #'   
 #' @source \url{https://www.gov.br/previdencia/pt-br/assuntos/previdencia-no-servico-publico/estatisticas-e-informacoes-dos-rpps-1/estatisticas-e-informacoes-dos-rpps}
 #' @md
-
 "dair" 
