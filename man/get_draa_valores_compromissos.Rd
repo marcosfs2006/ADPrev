@@ -52,7 +52,8 @@ Se a avaliação atuarial tem data base em 31/12/2019 o ano do DRAA é 2020.
 draa_RJ <- get_draa_valores_compromissos(sg_uf="RJ") 
 
 # Obtém dados dos valores dos compromissos do DRAA do RPPS de Quatis - RJ do ano de 2019
-draa_QuatisRJ2019 <- get_draa_valores_compromissos(nr_cnpj_entidade = "39560008000148", dt_exercicio=2019)
+draa_QuatisRJ2019 <- get_draa_valores_compromissos(nr_cnpj_entidade = "39560008000148",
+                                                   dt_exercicio=2019)
 }
 
 }
