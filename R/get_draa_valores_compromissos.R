@@ -40,7 +40,8 @@
 #' draa_RJ <- get_draa_valores_compromissos(sg_uf="RJ") 
 #' 
 #' # Obtém dados dos valores dos compromissos do DRAA do RPPS de Quatis - RJ do ano de 2019
-#' draa_QuatisRJ2019 <- get_draa_valores_compromissos(nr_cnpj_entidade = "39560008000148", dt_exercicio=2019)
+#' draa_QuatisRJ2019 <- get_draa_valores_compromissos(nr_cnpj_entidade = "39560008000148",
+#'                                                    dt_exercicio=2019)
 #' }
 #'
 get_draa_valores_compromissos <- function(...){
