@@ -39,7 +39,7 @@ library(ADPrev)
 
 ## Como usar?
 
-Algumas ilustrações de como utilizar o pacote podem ser consutadas no link a seguir:
+Exemplos de uso do pacote com as funções já disponíveis podem ser consutados no link a seguir:
 
 https://colab.research.google.com/drive/10i70YGMjyBub3IQoc5oQHZWMu0bTuNKK?usp=sharing
 
