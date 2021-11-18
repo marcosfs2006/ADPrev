@@ -1,4 +1,4 @@
-# Pacote ADPrev - Análise de Dados Previdenciários dos RPPS <img src="hex-pequeno_ADPrev.png" align="right"/>
+# ADPrev - Análise de Dados Previdenciários dos RPPS <img src="hex-pequeno_ADPrev.png" align="right"/>
 
 O objetivo do pacote é facilitar o uso dos dados previdenciários dos RPPS
 diponibilizados pela Subsecretaria dos Regimes Próprios de Previdência Social - SRPREV
