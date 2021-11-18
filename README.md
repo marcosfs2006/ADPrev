@@ -2,7 +2,8 @@
 
 O objetivo do pacote é facilitar o uso dos dados previdenciários dos RPPS
 diponibilizados pela Subsecretaria dos Regimes Próprios de Previdência Social - SRPREV
-por intermédio da [API](https://apicadprev.economia.gov.br/api-docs/) mantida com esse objetivo.
+por intermédio de uma [API](https://apicadprev.economia.gov.br/api-docs/) 
+específica para a disponibilização dos dados à sociedade.
 
 Para tanto o pacote oferece além de um conjunto de funções para extração dos dados da
 API e limpeza dos mesmos, funções que facilitam a realização de tarefas rotineiras
