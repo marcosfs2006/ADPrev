@@ -2,11 +2,11 @@
 #'
 #' Função para a obtenção de dados relativos às Autorizações para Aplicações e
 #' Resgates - APR a partir da API do CADPREV cuja documentação pode ser
-#' consultada em \url{https://apicadprev.economia.gov.br/api-docs/}.
+#' consultada em \url{https://apicadprev.trabalho.gov.br/api-docs/}.
 #' 
 #' Embora a função aceite como parâmetros qualquer um dos que possam ser passados
 #' ao ponto de acesso \code{DAIR_APLICACOES_RESGATE} recomendamos utilizar 
-#' os parâmtros abaixo elencados e depois realizar os filtros desejados.
+#' os parâmetros abaixo elencados e depois realizar os filtros desejados.
 #' 
 #' 
 #' \itemize{
@@ -38,25 +38,36 @@
 #' # Obtem os dados das APR emitidas pelo RPPS de Quatis - RJ em 2021
 #' apr_QuatisRJ2021 <- get_dair_aplicacoes_resgate(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
 #' }
-get_dair_aplicacoes_resgate <- function(...){ 
+get_dair_aplicacoes_resgate <- function(...){
   
-  flag <- TRUE
-  pagina = 0
-  consulta <- list(...)
+  consulta <- list(...) # Repassa parametros a api
+  pagina <- 0
   dados_dair_aplicacoes_resgate <- data.frame()
-
-  while(flag){
-    dair_aplicacoes_resgate <- httr::GET("https://apicadprev.economia.gov.br/DAIR_APLICACOES_RESGATE?", query=append(consulta, list(offset = pagina))) 
-    httr::stop_for_status(dair_aplicacoes_resgate, task="Error to connect to the server! Try again later.")
-    dair_aplicacoes_resgate_txt   <- httr::content(dair_aplicacoes_resgate, as="text", encoding="UTF-8")
-    dair_aplicacoes_resgate_json  <- jsonlite::fromJSON(dair_aplicacoes_resgate_txt, flatten = FALSE)
-    dair_aplicacoes_resgate_df    <- as.data.frame(dair_aplicacoes_resgate_json[["results"]][["data"]])
-    dados_dair_aplicacoes_resgate <- dplyr::bind_rows(dados_dair_aplicacoes_resgate, dair_aplicacoes_resgate_df)
-    flag <- dair_aplicacoes_resgate_json[["results"]][["rowLimitExceeded"]]
-    pagina <- pagina + 1
+  continuar <- TRUE
+  
+  while(continuar){
+    
+    # Acessando API:
+    dair_aplicacoes_resgate <- httr::GET("https://apicadprev.trabalho.gov.br/DAIR_APLICACOES_RESGATE", 
+                                         query = c(consulta, list(offset = pagina)))
+    
+    # Mensagem se o site estiver fora do ar ou der erro:
+    httr::stop_for_status(dair_aplicacoes_resgate, task = "Connect to the server! Try again later.")
+    
+    # Convertendo dados em lista:
+    dair_aplicacoes_resgate_json <- jsonlite::fromJSON(httr::content(dair_aplicacoes_resgate, as = "text", encoding = "UTF-8"))
+    
+    # Empilhando dados (o padrao e 5000):
+    dados_dair_aplicacoes_resgate <- dplyr::bind_rows(dados_dair_aplicacoes_resgate, dair_aplicacoes_resgate_json[["data"]])
+    
+    # Se alcancar o limite (5000), vai continuar a busca:
+    continuar <- dair_aplicacoes_resgate_json[["count"]] == dair_aplicacoes_resgate_json[["limit"]]
+    
+    # Avança o offset para a proxima pagina:
+    pagina <- pagina + dair_aplicacoes_resgate_json[["limit"]]
+    
     Sys.sleep(1)
   }
   
-return(dados_dair_aplicacoes_resgate)
-  
+  return(dados_dair_aplicacoes_resgate)
 }

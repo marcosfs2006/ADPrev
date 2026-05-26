@@ -4,11 +4,11 @@
 #' obtidos na avaliação atuarial anual do RPPS e registrados no  
 #' Demonstrativo de Resultados da Avaliação Atuarial - DRAA,
 #' utilizando a API do CADPREV cuja documentação pode ser consultada em 
-#' \url{https://apicadprev.economia.gov.br/api-docs/}.
+#' \url{https://apicadprev.trabalho.gov.br/api-docs/}.
 #' 
 #' Embora a função aceite como parâmetros qualquer um dos que possam ser passados
 #' ao ponto de acesso \code{DRAA_VALORES_COMPROMISSOS} recomendamos utilizar os 
-#' parâmtros abaixo elencados e depois realizar os filtros desejados.
+#' parâmetros abaixo elencados e depois realizar os filtros desejados.
 #' 
 #' 
 #' \itemize{
@@ -45,23 +45,35 @@
 #' }
 #'
 get_draa_valores_compromissos <- function(...){
-
-  flag <- TRUE
-  pagina = 0
-  consulta <- list(...)
-  dados_draa_valores_compromissos <- data.frame()
   
-  while(flag){
-    draa_valores_compromissos <- httr::GET("https://apicadprev.economia.gov.br/DRAA_VALORES_COMPROMISSOS?", query=append(consulta, list(offset = pagina)))
-    httr::stop_for_status(draa_valores_compromissos, task="connect to the server! Try again later.")
-    draa_valores_compromissos_txt  <- httr::content(draa_valores_compromissos, as="text", encoding="UTF-8")
-    draa_valores_compromissos_json <- jsonlite::fromJSON(draa_valores_compromissos_txt, flatten = FALSE) 
-    draa_valores_compromissos_df   <- as.data.frame(draa_valores_compromissos_json[["results"]][["data"]])
-    dados_draa_valores_compromissos <- dplyr::bind_rows(dados_draa_valores_compromissos, draa_valores_compromissos_df)
-    flag <- draa_valores_compromissos_json[["results"]][["rowLimitExceeded"]]
-    pagina <- pagina + 1
+  consulta <- list(...) # Repassa parametros a api
+  pagina <- 0
+  dados_draa_valores_compromissos <- data.frame()
+  continuar <- TRUE
+  
+  while(continuar){
+    
+    # Acessando API:
+    draa_valores_compromissos <- httr::GET("https://apicadprev.trabalho.gov.br/DRAA_VALORES_COMPROMISSOS", 
+                                           query = c(consulta, list(offset = pagina)))
+    
+    # Mensagem se o site estiver fora do ar ou der erro:
+    httr::stop_for_status(draa_valores_compromissos, task = "Connect to the server! Try again later.")
+    
+    # Convertendo dados em lista:
+    draa_valores_compromissos_json <- jsonlite::fromJSON(httr::content(draa_valores_compromissos, as = "text", encoding = "UTF-8"))
+    
+    # Empilhando dados (o padrao e 5000):
+    dados_draa_valores_compromissos <- dplyr::bind_rows(dados_draa_valores_compromissos, draa_valores_compromissos_json[["data"]])
+    
+    # Se alcancar o limite (5000), vai continuar a busca:
+    continuar <- draa_valores_compromissos_json[["count"]] == draa_valores_compromissos_json[["limit"]]
+    
+    # Avança o offset para a proxima pagina:
+    pagina <- pagina + draa_valores_compromissos_json[["limit"]]
+    
     Sys.sleep(1)
   }
   
-  return(dados_draa_valores_compromissos)  
+  return(dados_draa_valores_compromissos)
 }

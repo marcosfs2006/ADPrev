@@ -2,11 +2,11 @@
 #'
 #' Função para a obtenção de dados relativos ao Certificado de Regularidade
 #' Previdenciária - CRP a partir da API do CADPREV cuja documentação pode ser
-#' consultada em \url{https://apicadprev.economia.gov.br/api-docs/}.
+#' consultada em \url{https://apicadprev.trabalho.gov.br/api-docs/}.
 #' 
 #' Embora a função aceite como parâmetros qualquer um dos que possam ser passados
 #' ao ponto de acesso \code{RPPS_CRP} recomendamos utilizar os 
-#' parâmtros abaixo elencados e depois realizar os filtros desejados.
+#' parâmetros abaixo elencados e depois realizar os filtros desejados.
 #' 
 #' 
 #' \itemize{
@@ -35,20 +35,32 @@
 #' }
 get_crp <- function(...){
   
-  flag <- TRUE
-  pagina = 0
-  consulta <- list(...)
+  consulta <- list(...) # Repassa parametros a api
+  pagina <- 0
   dados_crp <- data.frame()
+  continuar <- TRUE
   
-  while(flag){
-    crp <- httr::GET("https://apicadprev.economia.gov.br/RPPS_CRP?", query=append(consulta, list(offset = pagina)))
-    httr::stop_for_status(crp, task="Connect to the server! Try again later.")
-    crp_txt   <- httr::content(crp, as="text", encoding="UTF-8")
-    crp_json  <- jsonlite::fromJSON(crp_txt, flatten = FALSE)
-    crp_df    <- as.data.frame(crp_json[["results"]][["data"]])
-    dados_crp <- dplyr::bind_rows(dados_crp, crp_df)
-    flag <- crp_json[["results"]][["rowLimitExceeded"]]
-    pagina <- pagina + 1
+  while(continuar){
+    
+    # Acessando API:
+    crp <- httr::GET("https://apicadprev.trabalho.gov.br/RPPS_CRP", 
+                     query = c(consulta, list(offset = pagina)))
+    
+    # Mensagem se o site estiver fora do ar ou der erro:
+    httr::stop_for_status(crp, task = "Connect to the server! Try again later.")
+    
+    # Convertendo dados em lista:
+    crp_json <- jsonlite::fromJSON(httr::content(crp, as = "text", encoding = "UTF-8"))
+    
+    # Empilhando dados (o padrao e 5000):
+    dados_crp <- dplyr::bind_rows(dados_crp, crp_json[["data"]])
+    
+    # Se alcancar o limite (5000), vai continuar a busca:
+    continuar <- crp_json[["count"]] == crp_json[["limit"]]
+    
+    # Avança o offset para a proxima pagina:
+    pagina <- pagina + crp_json[["limit"]]
+    
     Sys.sleep(1)
   }
   

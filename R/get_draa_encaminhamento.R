@@ -3,11 +3,11 @@
 #' Função para a obtenção de dados relativos ao encaminhamento do 
 #' Demonstrativo de Resultados da Avaliação Atuarial - DRAA à SPREV,
 #' utilizando a API do CADPREV cuja documentação pode ser consultada em 
-#' \url{https://apicadprev.economia.gov.br/api-docs/}.
+#' \url{https://apicadprev.trabalho.gov.br/api-docs/}.
 #' 
 #' Embora a função aceite como parâmetros qualquer um dos que possam ser passados
 #' ao ponto de acesso \code{DRAA_ENCAMINHAMENTO} recomendamos utilizar os 
-#' parâmtros abaixo elencados e depois realizar os filtros desejados.
+#' parâmetros abaixo elencados e depois realizar os filtros desejados.
 #' 
 #' 
 #' \itemize{
@@ -42,23 +42,35 @@
 #' }
 #'
 get_draa_encaminhamento <- function(...){
-
-  flag <- TRUE
-  pagina = 0
-  consulta <- list(...)
-  dados_draa_encaminhamento <- data.frame()
   
-  while(flag){
-    draa_encaminhamento <- httr::GET("https://apicadprev.economia.gov.br/DRAA_ENCAMINHAMENTO?", query=append(consulta, list(offset = pagina)))
-    httr::stop_for_status(draa_encaminhamento, task="connect to the server! Try again later.")
-    draa_encaminhamento_txt  <- httr::content(draa_encaminhamento, as="text", encoding="UTF-8")
-    draa_encaminhamento_json <- jsonlite::fromJSON(draa_encaminhamento_txt, flatten = FALSE) 
-    draa_encaminhamento_df   <- as.data.frame(draa_encaminhamento_json[["results"]][["data"]])
-    dados_draa_encaminhamento <- dplyr::bind_rows(dados_draa_encaminhamento, draa_encaminhamento_df)
-    flag <- draa_encaminhamento_json[["results"]][["rowLimitExceeded"]]
-    pagina <- pagina + 1
+  consulta <- list(...) # Repassa parametros a api
+  pagina <- 0
+  dados_draa_encaminhamento <- data.frame()
+  continuar <- TRUE
+  
+  while(continuar){
+    
+    # Acessando API:
+    draa_encaminhamento <- httr::GET("https://apicadprev.trabalho.gov.br/DRAA_ENCAMINHAMENTO", 
+                                     query = c(consulta, list(offset = pagina)))
+    
+    # Mensagem se o site estiver fora do ar ou der erro:
+    httr::stop_for_status(draa_encaminhamento, task = "Connect to the server! Try again later.")
+    
+    # Convertendo dados em lista:
+    draa_encaminhamento_json <- jsonlite::fromJSON(httr::content(draa_encaminhamento, as = "text", encoding = "UTF-8"))
+    
+    # Empilhando dados (o padrao e 5000):
+    dados_draa_encaminhamento <- dplyr::bind_rows(dados_draa_encaminhamento, draa_encaminhamento_json[["data"]])
+    
+    # Se alcancar o limite (5000), vai continuar a busca:
+    continuar <- draa_encaminhamento_json[["count"]] == draa_encaminhamento_json[["limit"]]
+    
+    # Avança o offset para a proxima pagina:
+    pagina <- pagina + draa_encaminhamento_json[["limit"]]
+    
     Sys.sleep(1)
   }
-
-  return(dados_draa_encaminhamento)  
+  
+  return(dados_draa_encaminhamento)
 }
