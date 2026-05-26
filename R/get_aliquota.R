@@ -2,11 +2,11 @@
 #'
 #' Função para a obtenção de dados relativos às alíquotas praticadas pelos RPPS,
 #' utilizando a API do CADPREV cuja documentação pode ser consultada em 
-#' \url{https://apicadprev.economia.gov.br/api-docs/}.
+#' \url{https://apicadprev.trabalho.gov.br/api-docs/}.
 #' 
 #' Embora a função aceite como parâmetros qualquer um dos que possam ser passados
 #' ao ponto de acesso \code{RPPS_ALIQUOTA} recomendamos utilizar os 
-#' parâmtros abaixo elencados e depois realizar os filtros desejados.
+#' parâmetros abaixo elencados e depois realizar os filtros desejados.
 #' 
 #' 
 #' \itemize{
@@ -35,26 +35,37 @@
 #' }
 #'
 get_aliquota <- function(...){
-
-  flag <- TRUE
-  pagina = 0
-  consulta <- list(...)
-  dados_aliquota <- data.frame()
   
-  while(flag){
-    aliquota <- httr::GET("https://apicadprev.economia.gov.br/RPPS_ALIQUOTA?", query=append(consulta, list(offset = pagina)))
-    httr::stop_for_status(aliquota, task="Cannot connect to the server! Try again later.")
-    aliquota_txt  <- httr::content(aliquota, as="text", encoding="UTF-8")
-    aliquota_json <- jsonlite::fromJSON(aliquota_txt, flatten = FALSE) 
-    aliquota_df   <- as.data.frame(aliquota_json[["results"]][["data"]])
-    dados_aliquota <- dplyr::bind_rows(dados_aliquota, aliquota_df)
-    flag <- aliquota_json[["results"]][["rowLimitExceeded"]]
-    pagina <- pagina + 1
+  consulta <- list(...) # Repassa parametros a api
+  pagina <- 0
+  dados_aliquota <- data.frame()
+  continuar <- TRUE
+  
+  while(continuar){
+    
+    # Acessando API:
+    aliquota <- httr::GET("https://apicadprev.trabalho.gov.br/RPPS_ALIQUOTA", 
+                               query = c(consulta, list(offset = pagina)))
+    
+    # Mensagem se o site estiver fora do ar ou der erro:
+    httr::stop_for_status(aliquota, task = "Connect to the server! Try again later.")
+    
+    # Convertendo dados em lista:
+    aliquota_json <- jsonlite::fromJSON(httr::content(aliquota, as = "text", encoding = "UTF-8"))
+    
+    # Empilhando dados (o padrao e 5000):
+    dados_aliquota <- dplyr::bind_rows(dados_aliquota, aliquota_json[["data"]])
+    
+    # Se alcancar o limite (5000), vai continuar a busca:
+    continuar <- aliquota_json[["count"]] == aliquota_json[["limit"]]
+    
+    # Avança o offset para a proxima pagina:
+    pagina <- pagina + aliquota_json[["limit"]]
+    
     Sys.sleep(1)
   }
   
   return(dados_aliquota)
-  
 }
 
 

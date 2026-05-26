@@ -2,11 +2,11 @@
 #'
 #' Função para a obtenção de dados relativos ao regime previdenciário a que
 #' pertence o RPPS utilizando a API do CADPREV cuja documentação pode ser consultada em 
-#' \url{https://apicadprev.economia.gov.br/api-docs/}.
+#' \url{https://apicadprev.trabalho.gov.br/api-docs/}.
 #' 
 #' Embora a função aceite como parâmetros qualquer um dos que possam ser passados
 #' ao ponto de acesso \code{RPPS_REGIME_PREVIDENCIARIO} recomenda-se utilizar os 
-#' parâmtros abaixo elencados e depois realizar os filtros desejados.
+#' parâmetros abaixo elencados e depois realizar os filtros desejados.
 #' 
 #' 
 #' \itemize{
@@ -36,30 +36,35 @@
 #' }
 #'
 get_regime_previdenciario <- function(...){
-
-
-  flag <- TRUE
-  pagina=0
-  consulta <- list(...)
-  dados_regime_previdenciario <- data.frame()
   
-  while(flag){
-    regime_previdenciario <- httr::GET("https://apicadprev.economia.gov.br/RPPS_REGIME_PREVIDENCIARIO?", query=append(consulta, list(offset = pagina)))
-    httr::stop_for_status(regime_previdenciario, task="Error to connect to the server! Try again later.")
-    regime_previdenciario_txt   <- httr::content(regime_previdenciario, as="text", encoding="UTF-8")
-    regime_previdenciario_json  <- jsonlite::fromJSON(regime_previdenciario_txt, flatten = FALSE)
-    regime_previdenciario_df    <- as.data.frame(regime_previdenciario_json[["results"]][["data"]])
-    dados_regime_previdenciario <- dplyr::bind_rows(dados_regime_previdenciario, regime_previdenciario_df)
-    flag <- regime_previdenciario_json[["results"]][["rowLimitExceeded"]]
-    pagina <- pagina + 1
+  consulta <- list(...) # Repassa parametros a api
+  pagina <- 0
+  dados_regime_previdenciario <- data.frame()
+  continuar <- TRUE
+  
+  while(continuar){
+    
+    # Acessando API:
+    regime_previdenciario <- httr::GET("https://apicadprev.trabalho.gov.br/RPPS_REGIME_PREVIDENCIARIO", 
+                                       query = c(consulta, list(offset = pagina)))
+    
+    # Mensagem se o site estiver fora do ar ou der erro:
+    httr::stop_for_status(regime_previdenciario, task = "Connect to the server! Try again later.")
+    
+    # Convertendo dados em lista:
+    regime_previdenciario_json <- jsonlite::fromJSON(httr::content(regime_previdenciario, as = "text", encoding = "UTF-8"))
+    
+    # Empilhando dados (o padrao e 5000):
+    dados_regime_previdenciario <- dplyr::bind_rows(dados_regime_previdenciario, regime_previdenciario_json[["data"]])
+    
+    # Se alcancar o limite (5000), vai continuar a busca:
+    continuar <- regime_previdenciario_json[["count"]] == regime_previdenciario_json[["limit"]]
+    
+    # Avança o offset para a proxima pagina:
+    pagina <- pagina + regime_previdenciario_json[["limit"]]
+    
     Sys.sleep(1)
   }
   
   return(dados_regime_previdenciario)
-  
 }
-
-
-  
-  
-  

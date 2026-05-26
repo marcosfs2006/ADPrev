@@ -2,11 +2,11 @@
 #'
 #' Função para a obtenção de dados relativos ao  Demonstrativo de Informações 
 #' Previdenciárias e Repasses - DIPR utilizando a API do CADPREV cuja documentação
-#' pode ser consultada em \url{https://apicadprev.economia.gov.br/api-docs/}.
+#' pode ser consultada em \url{https://apicadprev.trabalho.gov.br/api-docs/}.
 #' 
 #' Embora a função aceite como parâmetros qualquer um dos que possam ser passados
 #' ao ponto de acesso \code{DIPR} recomendamos utilizar os 
-#' parâmtros abaixo elencados e depois realizar os filtros desejados.
+#' parâmetros abaixo elencados e depois realizar os filtros desejados.
 #' 
 #' 
 #' \itemize{
@@ -36,26 +36,37 @@
 #' dipr_QuatisRJ2021 <- get_dipr(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
 #' }
 #'
-get_dipr <- function(...){ 
-
-  flag <- TRUE
-  pagina = 0
-  consulta <- list(...)
+get_dipr <- function(...){
+  
+  consulta <- list(...) # Repassa parametros a api
+  pagina <- 0
   dados_dipr <- data.frame()
-
-  while(flag){
-    dipr <- httr::GET("https://apicadprev.economia.gov.br/DIPR?", query=append(consulta, list(offset = pagina)))
-    httr::stop_for_status(dipr, task="Error to connect to the server! Try again later.")
-    dipr_txt   <- httr::content(dipr, as="text", encoding="UTF-8")
-    dipr_json  <- jsonlite::fromJSON(dipr_txt, flatten = FALSE)
-    dipr_df    <- as.data.frame(dipr_json[["results"]][["data"]])
-    dados_dipr <- dplyr::bind_rows(dados_dipr, dipr_df)
-    flag <- dipr_json[["results"]][["rowLimitExceeded"]]
-    pagina <- pagina + 1
+  continuar <- TRUE
+  
+  while(continuar){
+    
+    # Acessando API:
+    dipr <- httr::GET("https://apicadprev.trabalho.gov.br/DIPR", 
+                      query = c(consulta, list(offset = pagina)))
+    
+    # Mensagem se o site estiver fora do ar ou der erro:
+    httr::stop_for_status(dipr, task = "Connect to the server! Try again later.")
+    
+    # Convertendo dados em lista:
+    dipr_json <- jsonlite::fromJSON(httr::content(dipr, as = "text", encoding = "UTF-8"))
+    
+    # Empilhando dados (o padrao e 5000):
+    dados_dipr <- dplyr::bind_rows(dados_dipr, dipr_json[["data"]])
+    
+    # Se alcancar o limite (5000), vai continuar a busca:
+    continuar <- dipr_json[["count"]] == dipr_json[["limit"]]
+    
+    # Avança o offset para a proxima pagina:
+    pagina <- pagina + dipr_json[["limit"]]
+    
     Sys.sleep(1)
   }
   
   return(dados_dipr)
-  
 }
 

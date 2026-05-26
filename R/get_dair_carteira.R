@@ -2,11 +2,11 @@
 #'
 #' Função para a obtenção de dados relativos às carteiras de investimentos dos RPPS
 #' a partir da API do CADPREV cuja documentação pode ser consultada em
-#' \url{https://apicadprev.economia.gov.br/api-docs/}.
+#' \url{https://apicadprev.trabalho.gov.br/api-docs/}.
 #' 
 #' Embora a função aceite como parâmetros qualquer um dos que possam ser passados
 #' ao ponto de acesso \code{DAIR_CARTEIRA} recomendamos utilizar 
-#' os parâmtros abaixo elencados e depois realizar os filtros desejados.
+#' os parâmetros abaixo elencados e depois realizar os filtros desejados.
 #' 
 #' 
 #' \itemize{
@@ -27,7 +27,7 @@
 #' Para evitar erros devidos a incorreções no nome do Ente recomenda-se utilizar
 #' o CNPJ do Ente para consultas relativas a um RPPS específico.
 #' 
-#' Até 20216 a posição das carteiras de investimento dos RPPS era apresentada
+#' Até 2016 a posição das carteiras de investimento dos RPPS era apresentada
 #' ao término de cada bimestre. A partir de 2017 a posição da carteira passou
 #' a ser disponibilizada mensalmente, isto é, ao término de cada mês. 
 #'   
@@ -46,24 +46,36 @@
 #' 
 #' # Obtem os dados da carteira de investimento do RPPS de Quatis - RJ em
 #' # todos os meses de 2021
-#' dair_QuatisRJ <- get_crp(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
+#' dair_QuatisRJ <- get_dair_carteira(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
 #' }
 get_dair_carteira <- function(...){
   
-  flag <- TRUE
-  pagina = 0
-  consulta <- list(...)
-  dados_dair_carteira  <- data.frame()
-
-  while(flag){
-    dair_carteira <- httr::GET("https://apicadprev.economia.gov.br/DAIR_CARTEIRA?", query=append(consulta, list(offset = pagina)))
-    httr::stop_for_status(dair_carteira , task="Connect to the server! Try again later.")
-    dair_carteira_txt   <- httr::content(dair_carteira, as="text", encoding="UTF-8")
-    dair_carteira_json  <- jsonlite::fromJSON(dair_carteira_txt, flatten = FALSE)
-    dair_carteira_df    <- as.data.frame(dair_carteira_json[["results"]][["data"]])
-    dados_dair_carteira <- dplyr::bind_rows(dados_dair_carteira, dair_carteira_df)
-    flag <- dair_carteira_json[["results"]][["rowLimitExceeded"]]
-    pagina <- pagina + 1
+  consulta <- list(...) # Repassa parametros a api
+  pagina <- 0
+  dados_dair_carteira <- data.frame()
+  continuar <- TRUE
+  
+  while(continuar){
+    
+    # Acessando API:
+    dair_carteira <- httr::GET("https://apicadprev.trabalho.gov.br/DAIR_CARTEIRA", 
+                               query = c(consulta, list(offset = pagina)))
+    
+    # Mensagem se o site estiver fora do ar ou der erro:
+    httr::stop_for_status(dair_carteira, task = "Connect to the server! Try again later.")
+    
+    # Convertendo dados em lista:
+    dair_carteira_json <- jsonlite::fromJSON(httr::content(dair_carteira, as = "text", encoding = "UTF-8"))
+    
+    # Empilhando dados (o padrao e 5000):
+    dados_dair_carteira <- dplyr::bind_rows(dados_dair_carteira, dair_carteira_json[["data"]])
+    
+    # Se alcancar o limite (5000), vai continuar a busca:
+    continuar <- dair_carteira_json[["count"]] == dair_carteira_json[["limit"]]
+    
+    # Avança o offset para a proxima pagina:
+    pagina <- pagina + dair_carteira_json[["limit"]]
+    
     Sys.sleep(1)
   }
   
