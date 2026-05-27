@@ -1,7 +1,7 @@
 Package: ADPrev
 Type: Package
 Title: Análise de Dados Previdenciários dos RPPS
-Version: 0.1.1
+Version: 1.0.0
 Author: Marcos F Silva
 Maintainer: Marcos F Silva <marcosfs2006@gmail.com>
 Description: Este pacote disponibiliza dados e funções para auxiliar na análise de dados previdenciários dos RPPS.
