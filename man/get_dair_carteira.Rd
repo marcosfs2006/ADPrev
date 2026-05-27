@@ -16,12 +16,12 @@ Um \code{data frame} contendo os dados requisitados.
 \description{
 Função para a obtenção de dados relativos às carteiras de investimentos dos RPPS
 a partir da API do CADPREV cuja documentação pode ser consultada em
-\url{https://apicadprev.economia.gov.br/api-docs/}.
+\url{https://apicadprev.trabalho.gov.br/api-docs/}.
 }
 \details{
 Embora a função aceite como parâmetros qualquer um dos que possam ser passados
 ao ponto de acesso \code{DAIR_CARTEIRA} recomendamos utilizar 
-os parâmtros abaixo elencados e depois realizar os filtros desejados.
+os parâmetros abaixo elencados e depois realizar os filtros desejados.
 
 
 \itemize{
@@ -42,7 +42,7 @@ O nome do Ente deve ser fornecido exatamente como consta da base de dados.
 Para evitar erros devidos a incorreções no nome do Ente recomenda-se utilizar
 o CNPJ do Ente para consultas relativas a um RPPS específico.
 
-Até 20216 a posição das carteiras de investimento dos RPPS era apresentada
+Até 2016 a posição das carteiras de investimento dos RPPS era apresentada
 ao término de cada bimestre. A partir de 2017 a posição da carteira passou
 a ser disponibilizada mensalmente, isto é, ao término de cada mês.
 }
@@ -58,6 +58,6 @@ dair_RJ2020JUL <- get_dair_carteira(sg_uf="RJ", dt_ano=2021, dt_mes_bimestre=7)
 
 # Obtem os dados da carteira de investimento do RPPS de Quatis - RJ em
 # todos os meses de 2021
-dair_QuatisRJ <- get_crp(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
+dair_QuatisRJ <- get_dair_carteira(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
 }
 }

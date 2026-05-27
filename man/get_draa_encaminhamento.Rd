@@ -17,12 +17,12 @@ Um \code{data frame} contendo os dados requisitados.
 Função para a obtenção de dados relativos ao encaminhamento do 
 Demonstrativo de Resultados da Avaliação Atuarial - DRAA à SPREV,
 utilizando a API do CADPREV cuja documentação pode ser consultada em 
-\url{https://apicadprev.economia.gov.br/api-docs/}.
+\url{https://apicadprev.trabalho.gov.br/api-docs/}.
 }
 \details{
 Embora a função aceite como parâmetros qualquer um dos que possam ser passados
 ao ponto de acesso \code{DRAA_ENCAMINHAMENTO} recomendamos utilizar os 
-parâmtros abaixo elencados e depois realizar os filtros desejados.
+parâmetros abaixo elencados e depois realizar os filtros desejados.
 
 
 \itemize{

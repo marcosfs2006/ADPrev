@@ -16,12 +16,12 @@ Um \code{data frame} contendo os dados requisitados.
 \description{
 Função para a obtenção de dados relativos às Autorizações para Aplicações e
 Resgates - APR a partir da API do CADPREV cuja documentação pode ser
-consultada em \url{https://apicadprev.economia.gov.br/api-docs/}.
+consultada em \url{https://apicadprev.trabalho.gov.br/api-docs/}.
 }
 \details{
 Embora a função aceite como parâmetros qualquer um dos que possam ser passados
 ao ponto de acesso \code{DAIR_APLICACOES_RESGATE} recomendamos utilizar 
-os parâmtros abaixo elencados e depois realizar os filtros desejados.
+os parâmetros abaixo elencados e depois realizar os filtros desejados.
 
 
 \itemize{
