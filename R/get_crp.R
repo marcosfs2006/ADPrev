@@ -33,6 +33,7 @@
 #' # Obtém os dados do CRP do RPPS de Quatis - RJ
 #' crp_QuatisRJ <- get_crp(nr_cnpj_entidade = "39560008000148")
 #' }
+#' @export
 get_crp <- function(...){
   
   consulta <- list(...) # Repassa parametros a api

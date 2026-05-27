@@ -52,5 +52,4 @@ draa_encaminhamnto_RJ <- get_draa_encaminhamento(sg_uf="RJ")
 # Obtém dados de encaminhamento do DRAA feito pelo RPPS de Quatis - RJ
 draa_encaminhamento_QuatisRJ <- get_draa_encaminhamento(nr_cnpj_entidade = "39560008000148")
 }
-
 }

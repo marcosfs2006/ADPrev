@@ -40,7 +40,7 @@
 #' # Obtém dados de encaminhamento do DRAA feito pelo RPPS de Quatis - RJ
 #' draa_encaminhamento_QuatisRJ <- get_draa_encaminhamento(nr_cnpj_entidade = "39560008000148")
 #' }
-#'
+#' @export
 get_draa_encaminhamento <- function(...){
   
   consulta <- list(...) # Repassa parametros a api

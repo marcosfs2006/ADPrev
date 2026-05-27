@@ -48,6 +48,7 @@
 #' # todos os meses de 2021
 #' dair_QuatisRJ <- get_dair_carteira(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
 #' }
+#' @export
 get_dair_carteira <- function(...){
   
   consulta <- list(...) # Repassa parametros a api

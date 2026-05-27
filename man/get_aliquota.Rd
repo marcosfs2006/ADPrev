@@ -45,5 +45,4 @@ aliquotas_RJ <- get_aliquota(sg_uf="RJ")
 # Obtém dados das alíquotas praticadas pelo RPPS de Quatis - RJ
 aliquotas_QuatisRJ <- get_aliquota(nr_cnpj_entidade = "39560008000148")
 }
-
 }

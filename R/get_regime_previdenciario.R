@@ -34,7 +34,7 @@
 #' # está vinculado
 #' reg_prev_QuatisRJ <- get_regime_previdenciario(nr_cnpj_entidade = "39560008000148")
 #' }
-#'
+#' @export
 get_regime_previdenciario <- function(...){
   
   consulta <- list(...) # Repassa parametros a api

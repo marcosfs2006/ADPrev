@@ -35,7 +35,7 @@
 #' # Obtém dados dos DIPR do RPPS de Quatis - RJ em todos os meses de 2021
 #' dipr_QuatisRJ2021 <- get_dipr(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
 #' }
-#'
+#' @export
 get_dipr <- function(...){
   
   consulta <- list(...) # Repassa parametros a api

@@ -38,6 +38,7 @@
 #' # Obtem os dados das APR emitidas pelo RPPS de Quatis - RJ em 2021
 #' apr_QuatisRJ2021 <- get_dair_aplicacoes_resgate(nr_cnpj_entidade = "39560008000148", dt_ano=2021)
 #' }
+#' @export
 get_dair_aplicacoes_resgate <- function(...){
   
   consulta <- list(...) # Repassa parametros a api

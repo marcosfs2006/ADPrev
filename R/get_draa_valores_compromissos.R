@@ -43,7 +43,7 @@
 #' draa_QuatisRJ2019 <- get_draa_valores_compromissos(nr_cnpj_entidade = "39560008000148",
 #'                                                    dt_exercicio=2019)
 #' }
-#'
+#' @export
 get_draa_valores_compromissos <- function(...){
   
   consulta <- list(...) # Repassa parametros a api

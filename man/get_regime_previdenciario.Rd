@@ -46,5 +46,4 @@ reg_prev_RJ <- get_regime_previdenciario(sg_uf="RJ")
 # está vinculado
 reg_prev_QuatisRJ <- get_regime_previdenciario(nr_cnpj_entidade = "39560008000148")
 }
-
 }
