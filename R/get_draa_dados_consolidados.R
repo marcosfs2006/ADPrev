@@ -1,12 +1,12 @@
-#' Extrai dados de encaminhamento do DRAA da API do CADPREV
+#' Extrai dados dos Dados Consolidados do DRAA da API do CADPREV
 #'
-#' Função para a obtenção de dados relativos ao encaminhamento do 
+#' Função para a obtenção de dados relativos aos Dados Consolidados do 
 #' Demonstrativo de Resultados da Avaliação Atuarial - DRAA à SPREV,
 #' utilizando a API do CADPREV cuja documentação pode ser consultada em 
 #' \url{https://apicadprev.trabalho.gov.br/api-docs/}.
 #' 
 #' Embora a função aceite como parâmetros qualquer um dos que possam ser passados
-#' ao ponto de acesso \code{DRAA_ENCAMINHAMENTO} recomendamos utilizar os 
+#' ao ponto de acesso \code{DRAA_DADOS_CONSOLIDADOS} recomendamos utilizar os 
 #' parâmetros abaixo elencados e depois realizar os filtros desejados.
 #' 
 #' 
@@ -30,47 +30,47 @@
 #' Se a avaliação atuarial tem data base em 31/12/2019 o ano do DRAA é 2020. 
 #'   
 #' @param ... Qualquer um dos parâmetros de consulta disponibilizados pela API
-#'  para a consulta ao encaminhamento do DRAA.  
+#'  para a consulta ao dados_consolidados do DRAA.  
 #' @return Um \code{data frame} contendo os dados requisitados.
 #' @examples
 #' \dontrun{ 
-#' # Obtém dados de encaminhamento do DRAA feito pelos RPPS do RJ
-#' draa_encaminhamento_RJ <- get_draa_encaminhamento(sg_uf="RJ") 
+#' # Obtém dados dos Dados Consolidados do DRAA feito pelos RPPS do RJ
+#' draa_dados_consolidados_RJ <- get_draa_dados_consolidados(sg_uf="RJ") 
 #' 
-#' # Obtém dados de encaminhamento do DRAA feito pelo RPPS de Quatis - RJ
-#' draa_encaminhamento_QuatisRJ <- get_draa_encaminhamento(nr_cnpj_entidade = "39560008000148")
+#' # Obtém dados dos Dados Consolidados do DRAA feito pelo RPPS de Quatis - RJ
+#' draa_dados_consolidados_QuatisRJ <- get_draa_dados_consolidados(nr_cnpj_entidade = "39560008000148")
 #' }
 #' @export
-get_draa_encaminhamento <- function(...){
+get_draa_dados_consolidados <- function(...){
   
   consulta <- list(...) # Repassa parametros a api
   pagina <- 0
-  dados_draa_encaminhamento <- data.frame()
+  dados_draa_dados_consolidados <- data.frame()
   continuar <- TRUE
   
   while(continuar){
     
     # Acessando API:
-    draa_encaminhamento <- httr::GET("https://apicadprev.trabalho.gov.br/DRAA_ENCAMINHAMENTO", 
-                                     query = c(consulta, list(offset = pagina)))
+    draa_dados_consolidados <- httr::GET("https://apicadprev.trabalho.gov.br/DRAA_DADOS_CONSOLIDADOS", 
+                                        query = c(consulta, list(offset = pagina)))
     
     # Mensagem se o site estiver fora do ar ou der erro:
-    httr::stop_for_status(draa_encaminhamento, task = "Connect to the server! Try again later.")
+    httr::stop_for_status(draa_dados_consolidados, task = "Connect to the server! Try again later.")
     
     # Convertendo dados em lista:
-    draa_encaminhamento_json <- jsonlite::fromJSON(httr::content(draa_encaminhamento, as = "text", encoding = "UTF-8"))
+    draa_dados_consolidados_json <- jsonlite::fromJSON(httr::content(draa_dados_consolidados, as = "text", encoding = "UTF-8"))
     
     # Empilhando dados (o padrao e 5000):
-    dados_draa_encaminhamento <- dplyr::bind_rows(dados_draa_encaminhamento, draa_encaminhamento_json[["data"]])
+    dados_draa_dados_consolidados <- dplyr::bind_rows(dados_draa_dados_consolidados, draa_dados_consolidados_json[["data"]])
     
     # Se alcancar o limite (5000), vai continuar a busca:
-    continuar <- draa_encaminhamento_json[["count"]] == draa_encaminhamento_json[["limit"]]
+    continuar <- draa_dados_consolidados_json[["count"]] == draa_dados_consolidados_json[["limit"]]
     
     # Avança o offset para a proxima pagina:
-    pagina <- pagina + draa_encaminhamento_json[["limit"]]
+    pagina <- pagina + draa_dados_consolidados_json[["limit"]]
     
     Sys.sleep(1)
   }
   
-  return(dados_draa_encaminhamento)
+  return(dados_draa_dados_consolidados)
 }
