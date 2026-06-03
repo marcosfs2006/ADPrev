@@ -29,7 +29,7 @@ parâmetros abaixo elencados e depois realizar os filtros desejados.
   \item \code{nr_cnpj_entidade} caractere indicando o CNPJ do Ente a que pertence o RPPS
   \item \code{no_ente} caractere indicando o nome do Ente a que pertence o RPPS
   \item \code{sg_uf} caractere indicando a sigla da unidade da federação a que pertence o RPPS
-  \item \code{dt_exercicio} inteiro indicando o ano do DRAA
+  \item \code{dt_ano} inteiro indicando o ano do DRAA
 }
 
 A sigla da UF deve ser fornecida em letras maiúsculas.
